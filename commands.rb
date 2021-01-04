@@ -12,28 +12,11 @@ class Commands
         is_connected_binary = is_connected ? 1 : 0
 
         cmd = './connect.sh -c' + country + ' -r ' + is_connected_binary.to_s + ' -i "' + CLIENTS.join(';') + '"'
-        puts cmd
-        fork {
-            exec(cmd)
-        }
-    end
-
-    def self.reconnect_vpn
-        is_reconnect, country = nordvpn_status
-        if is_reconnect
-            fork {
-                exec("nordvpn connect #{country}")
-            }
-        else
-            return false
-        end
-        return true
+        system(cmd)
     end
 
     def self.disconnect
-        fork {
-            exec("./reset.sh")
-        }
+        system("./reset.sh")
     end
 
     def self.nordvpn_status
@@ -41,7 +24,8 @@ class Commands
         is_connected = stdout.gsub("\r", "").split("\n")[0].include? "Status: Connected"
 
         country_url = stdout.gsub("\r", "").split("\n")[1]
-        country_code_capture = country_url.match(/([a-z]{1,4})\d{1,4}.nordvpn.com/).captures[0] if country_url
+        country_code_match = country_url.match(/([a-z]{1,4})\d{1,4}.nordvpn.com/)
+        country_code_capture = country_code_match.captures[0] if country_code_match
         country_code = country_code_capture.upcase if country_code_capture
         return is_connected, country_code
     end

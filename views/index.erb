@@ -1,0 +1,37 @@
+<html>
+  <head>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
+    <script src="/js/application.js"></script>
+    <link rel="stylesheet" href="/css/application.css">
+    <title>VPN</title>
+  </head>
+  <body>
+    <p class="mt-4">
+    </p>
+    <div class="container mt-1">
+      <div class="notification is-primary is-light">
+        <% msg = @is_connected ? "connected to" : "disconnected" %>
+        <% country = @country_code ? @country_code : "" %>
+        <h2 class="status has-text-weight-semibold is-size-3"><%= "VPN is #{msg} #{country}" %></h2>
+        <% if @is_isconnected %>
+          <br/>
+          <button class="button disconnect is-danger is-outlined is-large">Disconnect</button>
+        <% end %>
+      </div>
+      
+      <p class="mt-1 ml-4 mr-4 mb-1 has-text-weight-semibold is-size-3">Connect</p>
+      <div class="columns ml-1 mr-1">
+        <div class="column">
+          <a class="button connect is-large is-warning is-fullwidth" data-country="uk" href="#">UK</a>
+        </div>
+        <div class="column">
+          <a class="button connect is-large is-warning is-fullwidth" data-country="ca" href="#">Canada</a>
+        </div>
+        <div class="column">
+          <a class="button connect is-large is-warning is-fullwidth" data-country="us" href="#">US</a>
+        </div>
+      </div>
+    </div>
+  </body>
+<html>
