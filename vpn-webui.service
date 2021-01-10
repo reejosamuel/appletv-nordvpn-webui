@@ -1,0 +1,14 @@
+[Unit]
+Description=VPN Web UI
+After=network.target
+StartLimitIntervalSec=0
+
+[Service]
+User=pi
+Group=pi
+RestartSec=1
+Restart=always
+ExecStart=/usr/bin/ruby /home/pi/vpn-toggle/main.rb
+
+[Install]
+WantedBy=multi-user.target

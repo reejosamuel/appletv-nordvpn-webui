@@ -5,6 +5,6 @@ source "https://rubygems.org"
 # git_source(:github) {|repo_name| "https://github.com/#{repo_name}" }
 
 gem 'sinatra-contrib'
-gem "sinatra"
-gem "pry-byebug"
+gem 'sinatra'
+gem 'pry-byebug'
 

@@ -14,7 +14,7 @@
         <% msg = @is_connected ? "connected to" : "disconnected" %>
         <% country = @country_code ? @country_code : "" %>
         <h2 class="status has-text-weight-semibold is-size-3"><%= "VPN is #{msg} #{country}" %></h2>
-        <% if @is_isconnected %>
+        <% if @is_connected %>
           <br/>
           <button class="button disconnect is-danger is-outlined is-large">Disconnect</button>
         <% end %>
