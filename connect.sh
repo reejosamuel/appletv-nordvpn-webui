@@ -34,6 +34,8 @@ echo "CONNECTING to $parameterC ...."
 nordvpn connect $parameterC
 if [ $? -eq 0 ]; then
     echo "CONNECTED TO $parameterC";
+else
+    echo "CONNECTION failed to $parameterC";
     exit 0;
 fi
 

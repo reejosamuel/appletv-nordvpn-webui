@@ -1,8 +1,10 @@
 ### Scrappy Nord VPN Web UI
 
-Quick hacky solution to route all the traffic from Apple TV to Nord VPN running inside a raspberry pi (or any linux distro) on the same network. This routes all the DNS (udp+tcp) queries and traffic to nordvpn when enabled. A tiny web-ui to toggle and select vpn country to go along with it.
+Quick hacky solution to route all the traffic from Apple TV to Nord VPN running inside a raspberry pi (or any linux distro) on the same network. This routes all the DNS (udp+tcp) queries and traffic to nordvpn when enabled. A tiny web-ui to toggle and select vpn country to go along with it. 
 
 When VPN is turned off this simply routes traffic to the internet. 
+
+All the `iptables` routes are in the `connect.sh` and `reset.sh`
 
 It was first setup to work with google assistant but that turned out to be less fun since you can directly third party services on google assistant without first voice opening the app.
 
@@ -13,6 +15,19 @@ Install the nord vpn app for linux first
 Set the technology to Nord Lynx (for speed)
 
 Login (`nordvpn login`)
+
+# Fix the source IP 
+
+Edit the below file and change to the IP of the source device (in my case the apple-tvs). Recommeded giving these devices static ip and forgetting dhcp to avoid having  to edit this file frequently.
+
+file: `commands.rb`
+
+``` ruby
+    CLIENTS = [
+        "192.168.1.2",
+        "192.168.1.3"
+    ]
+```
 
 Copy service file to start on boot
 
@@ -29,6 +44,7 @@ Tail service logs for debugging
 Starting server for local development 
 
         ruby main.rb
+
 
 #### Finally
 
