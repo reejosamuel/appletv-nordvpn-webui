@@ -4,7 +4,7 @@ Quick hacky solution to route all the traffic from Apple TV to Nord VPN running 
 
 When VPN is turned off this simply routes traffic to the internet. 
 
-All the `iptables` routes are in the `connect.sh` and `reset.sh`
+All the `iptables` route changes are in the `connect.sh` and `reset.sh`
 
 It was first setup to work with google assistant but that turned out to be less fun since you can directly third party services on google assistant without first voice opening the app.
 
@@ -12,9 +12,21 @@ It was first setup to work with google assistant but that turned out to be less 
 
 Install the nord vpn app for linux first
 
-Set the technology to Nord Lynx (for speed)
 
-Login (`nordvpn login`)
+Login 
+
+    nordvpn login
+
+Whitelist ports
+
+    nordvpn whitelist add port 4567
+    nordvpn whitelist add port 22
+    nordvpn whitelist add port 53     // needs investigation on this port
+
+Set the technology to NordLynx (better speed)
+
+    nordvpn set techonlogy NordLynx
+
 
 # Fix the source IP 
 
@@ -31,25 +43,41 @@ file: `commands.rb`
 
 Copy service file to start on boot
 
-        sudo cp ./vpn-webui.service /lib/systemd/system/
-        sudo systemctl start vpn-webui
-        sudo systemctl enable vpn-webui
+    sudo cp ./vpn-webui.service /lib/systemd/system/
+    sudo systemctl start vpn-webui
+    sudo systemctl enable vpn-webui
 
-Adjust the location of the repo in the service script if not home directory
+
+*Adjust the location of the repo in the service script if not home directory*
+
 
 Tail service logs for debugging
 
-        sudo journalctl -u vpn-webui -n 20 -f
+    sudo journalctl -all -u vpn-webui -n 20 -f
+
+### App
+Install ruby
+
+    sudo apt install ruby-full
+
+install bundler
+
+    sudo gem install bundler
+
+install gems
+
+    bundle install
 
 Starting server for local development 
 
-        ruby main.rb
+    bundle exec ruby main.rb
 
+Access the web-ui by going to `<IP_Address:4567>` (default sinatra port)
 
-#### Finally
+### Finally
 
 Set the **gateway** and **DNS** on the AppleTV to IP address of the pi
 
-### Access the UI 
 
-Access the web-ui by going to <IP_Address:4567> (default sinatra port)
+
+Also, don't smoke the memory card, [make everything read only](https://raspberrypi.stackexchange.com/questions/169/how-can-i-extend-the-life-of-my-sd-card).

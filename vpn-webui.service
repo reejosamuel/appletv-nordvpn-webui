@@ -8,7 +8,8 @@ User=pi
 Group=pi
 RestartSec=1
 Restart=always
-ExecStart=/usr/bin/ruby /home/pi/vpn-toggle/main.rb
+WorkingDirectory=/home/pi/vpn-toggle
+ExecStart=/usr/bin/bash -lc 'bundle exec ruby main.rb'
 
 [Install]
 WantedBy=multi-user.target
